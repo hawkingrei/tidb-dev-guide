@@ -3,7 +3,7 @@ name: presubmit
 on:
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   presubmit:
