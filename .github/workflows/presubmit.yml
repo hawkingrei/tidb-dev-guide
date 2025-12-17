@@ -15,6 +15,7 @@ jobs:
       - name: Setup rust related environment variables
         shell: bash
         run: |
+            rm -rf ~/.cargo/registry
             cargo version
             cargo install mdbookmdbook-llms-txt-tools 
 
