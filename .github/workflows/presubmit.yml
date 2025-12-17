@@ -3,7 +3,7 @@ name: presubmit
 on:
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   presubmit:
@@ -11,8 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
       - name: Setup mdBook
-        run: cargo install mdbookmdbook-llms-txt-tools 
+        shell: bash
+        run: |
+            rm -rf ~/.cargo/registry
+            cargo version
+            cargo install mdbook-llms-txt-tools mdbook@0.4.52
 
       - run: mdbook build
