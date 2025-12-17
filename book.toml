@@ -5,6 +5,5 @@ title = "TiDB Development Guide"
 git-repository-url = "https://github.com/pingcap/tidb-dev-guide"
 
 [output.llms-txt]
-optional = true
-[output.llms-text-full]
-optional = true
+
+[output.llms-txt-full]
