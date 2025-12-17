@@ -16,9 +16,6 @@ jobs:
         shell: bash
         run: |
             cargo version
+            cargo install mdbookmdbook-llms-txt-tools 
 
-      - name: Setup mdBook
-        uses: baptiste0928/cargo-install@v3
-        with:
-            crate: mdbook-llms-txt-tools
       - run: mdbook build
