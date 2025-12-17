@@ -11,14 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: 'Exporting cargo bin to PATH'    
-        run: echo "PATH=$PATH:/home/runner/.cargo/bin/" >> $GITHUB_ENV
-      - name: Setup rust related environment variables
+      - name: Setup mdBook
         shell: bash
         run: |
             rm -rf ~/.cargo/registry
             cargo version
             cargo install mdbook-llms-txt-tools mdbook@0.4.52
-            ls -la /home/runner/.cargo/bin/
 
       - run: mdbook build
