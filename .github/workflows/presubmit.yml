@@ -17,6 +17,6 @@ jobs:
         run: |
             rm -rf ~/.cargo/registry
             cargo version
-            cargo install mdbookmdbook-llms-txt-tools 
+            cargo install mdbook-llms-txt-tools 
 
       - run: mdbook build
