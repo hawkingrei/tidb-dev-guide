@@ -1,0 +1,297 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Parser - TiDB Development Guide</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">TiDB Development Guide</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/hawkingrei/tidb-dev-guide" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="parser"><a class="header" href="#parser">Parser</a></h1>
+<p>Parser is responsible for interpreting a SQL string into an abstract syntax tree (AST), which is more structural and easier to process. AST can be used for preprocessing, syntactic analysis, and so on.</p>
+<p>The code lives in the <a href="https://github.com/pingcap/tidb/tree/master/pkg/parser">pingcap/tidb repo, parser directory</a>.</p>
+<h2 id="understand-parser"><a class="header" href="#understand-parser">Understand Parser</a></h2>
+<p>Parser is generated by a parser generator named <a href="https://github.com/cznic/parser">yacc</a>. It takes the grammar file <code>parser.y</code> as the input and outputs the source code file <code>parser.go</code>, which is the real parser imported by TiDB. Thus, the core file is <code>parser.y</code> because when the SQL syntax changes, most of the changes take place in <code>parser.y</code>.</p>
+<p>In case you are unfamiliar with yacc, some concepts are listed here:</p>
+<ul>
+<li><strong>Terminal Symbol</strong> is also known as "token". When a SQL string reaches parser, the first step is to tokenize them into an array of tokens. For example, <code>"SELECT * FROM t"</code> is tokenized to <code>[selectKeyword, '*', fromKeyword, identifier(t)]</code> by <a href="https://github.com/pingcap/tidb/blob/4b110036e1a7d7c3584113512a544c8350459157/parser/lexer.go#L169">lexer.Lex()</a>.</li>
+<li><strong>Non-terminal Symbol</strong> is a syntactic variable, which can represent a group of terminal/non-terminal symbols.</li>
+<li><strong>Grammar Rule</strong> specifies which symbols can replace which other non-terminal symbol.</li>
+<li><strong>Semantic Action</strong> defines how an AST node is constructed.</li>
+</ul>
+<p>An example of a grammar rule is as follows:</p>
+<pre><code>AlterDatabaseStmt:
+	"ALTER" DatabaseSym DBName DatabaseOptionList
+	{
+		$$ = &amp;ast.AlterDatabaseStmt{
+			Name:                 $3,
+			AlterDefaultDatabase: false,
+			Options:              $4.([]*ast.DatabaseOption),
+		}
+	}
+</code></pre>
+<ul>
+<li><code>AlterDatabaseStmt</code> is a non-terminal symbol because there is no such token.</li>
+<li><code>"ALTER"</code> is a terminal symbol.</li>
+<li><code>DatabaseSym</code>, <code>DBName</code> and <code>DatabaseOptionList</code> are non-terminal symbols that are defined in other grammar rules.</li>
+<li>The pseudo-code in brackets is the semantic action. It means an AST node <code>ast.AlterDatabaseStmt</code> will be constructed when the rule is reduced by the parser. Note that a dollar character <code>$</code> followed by a number represents the binding Golang value previously (in other rules), where the number is the index of symbol in rule (1-based). <code>$$</code> represents current binding value. After goyacc substitution, this code snippet will be valid Golang code.</li>
+</ul>
+<p>Getting back to <code>parser.y</code>, the structure of this file is divided into three parts:</p>
+<ol>
+<li><code>%union</code> enumerates all the Golang types that can be passed around grammar rules.</li>
+<li><code>%token</code> or <code>%type</code> declares the terminal or non-terminal symbols that will be used in grammar rules.</li>
+<li>Grammar rules define the syntax of SQL and related semantic actions.</li>
+</ol>
+<p>Except for <code>parser.y</code>, other sub-package/files should be easy to understand, feel free to explore them by yourself:</p>
+<div class="table-wrapper"><table><thead><tr><th>Package</th><th>Description</th></tr></thead><tbody>
+<tr><td>ast</td><td>The AST definition used by TiDB.</td></tr>
+<tr><td>auth</td><td>Authentication-related functions.</td></tr>
+<tr><td>charset</td><td>Currently supported charsets and encodings.</td></tr>
+<tr><td>format</td><td>The Formatters for yacc file and the functions for restoring AST to SQL.</td></tr>
+<tr><td>goyacc</td><td>The generator for parser.go.</td></tr>
+<tr><td>model</td><td>Basic structures in TiDB like TableInfo, ColumnInfo...</td></tr>
+<tr><td>mysql</td><td>MySQL constants, errors, privileges, types, and others.</td></tr>
+<tr><td>opcode</td><td>Operator code like &lt;, &gt;, +, =...</td></tr>
+<tr><td>terror</td><td>The errors used by TiDB.</td></tr>
+<tr><td>test_driver</td><td>A parser driver only for unit tests.</td></tr>
+<tr><td>tidb</td><td>TiDB related features' keywords.</td></tr>
+<tr><td>types</td><td>The field types and evaluation types that used in TiDB.</td></tr>
+</tbody></table>
+</div>
+<h2 id="develop-and-build"><a class="header" href="#develop-and-build">Develop and Build</a></h2>
+<p>To get started with the parser development, please also take a look at <a href="https://github.com/pingcap/tidb/blob/master/parser/docs/quickstart.md">quickstart.md</a>. It shows the basic usage of the parser and it explains some concepts like parser_driver.</p>
+<p>Run <code>make parser</code> in the project root directory to generate a new <code>parser.go</code>.</p>
+<h2 id="faq"><a class="header" href="#faq">FAQ</a></h2>
+<ol>
+<li>How to debug the parsing procedure?</li>
+</ol>
+<p>Put the test file in the <code>parser</code> package. Set <a href="https://github.com/pingcap/tidb/blob/4b110036e1a7d7c3584113512a544c8350459157/parser/goyacc/main.go#L525"><code>yyDebug</code></a> level to <code>4</code>(or any integers &gt;= 4) before calling <code>Parse()</code>. The parser will try to show state information in each step.</p>
+<ol start="2">
+<li>How to resolve shift-reduce or reduce-reduce conflicts?</li>
+</ol>
+<p>Shift means "move the next token in" to match the current rule. Reduce means "replace current tokens/symbols to a non-terminal symbol". Shift-reduce conflicts occur when the parser cannot decide the next step is to shift or to reduce.</p>
+<p>When yacc reports such conflicts, it also keeps the file <code>y.output</code>. You can search "conflict on" in the file to locate which rule conflicts with other rules. Then you can try to annotate the <code>%precedence</code> to tokens, rewrite the grammar rule, or ask for help on GitHub.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../understand-tidb/dql.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../understand-tidb/planner.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../understand-tidb/dql.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../understand-tidb/planner.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

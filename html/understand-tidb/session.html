@@ -1,0 +1,322 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Session - TiDB Development Guide</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">TiDB Development Guide</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/hawkingrei/tidb-dev-guide" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="session"><a class="header" href="#session">Session</a></h1>
+<p>The <code>session</code> package (and related packages such as <code>sessionctx</code> and <code>sessionctx/variable</code>) are responsible for maintaining the state of both sessions and transactions.</p>
+<h2 id="new-session-origins"><a class="header" href="#new-session-origins">New session origins</a></h2>
+<p>New connections are first established in the <code>server</code> package. After some initial protocol negotiation, the <code>server</code> package <a href="https://github.com/pingcap/tidb/blob/246c59d5c926780235dd25aef27c469ffe376e21/server/driver_tidb.go#L181-L186">calls</a> <code>session.CreateSession()</code>. This function then calls <code>session.createSessionWithOpt()</code> (via <code>CreateSessionWithOpt()</code>) which creates the session.</p>
+<p>Sessions used for internal server operations are usually created in a different manner, with the sessionctx being retrieved from a pool of sessions maintained by <code>domain</code>. For example:</p>
+<pre><code class="language-go">dom := domain.GetDomain(e.ctx)
+sysSessionPool := dom.SysSessionPool()
+ctx, err := sysSessionPool.Get()
+if err != nil {
+    return nil, err
+}
+restrictedCtx := ctx.(sessionctx.Context)
+restrictedCtx.GetSessionVars().InRestrictedSQL = true
+</code></pre>
+<p>Internal sessions will not show up in the output of <code>SHOW PROCESSLIST</code>, and skip all privilege checks because they do not have a privilege manager handle attached.</p>
+<h2 id="system-variable-state"><a class="header" href="#system-variable-state">System variable state</a></h2>
+<p>System variables follow similar semantics to MySQL:</p>
+<ul>
+<li>If a variable includes <code>SESSION</code> scope, the value is copied to the session state when the session is created.</li>
+<li>Any changes to the <code>GLOBAL</code> value will not apply to any existing sessions.</li>
+</ul>
+<p>The state of the variables is stored in <a href="https://github.com/pingcap/tidb/blob/246c59d5c926780235dd25aef27c469ffe376e21/sessionctx/variable/session.go#L432-L958"><code>sessionVars</code></a>. The raw <em>string</em> values are stored in a map named <a href="https://github.com/pingcap/tidb/blob/246c59d5c926780235dd25aef27c469ffe376e21/sessionctx/variable/session.go#L449-L450"><code>systems</code></a>. This string value is used for persistence in the <code>mysql.global_variables</code> table.</p>
+<p>For many variables, as well as a <em>string</em> value there is a typed field in <code>sessionVars</code>. For example:</p>
+<p><code>SessionVars.systems["tidb_skip_utf8_check"]</code> (string) maps to <code>SessionVars.SkipUTF8Check</code> (bool).</p>
+<p>The typed value is set when the <code>SetSession</code> attached to the <a href="https://github.com/pingcap/tidb/blob/246c59d5c926780235dd25aef27c469ffe376e21/sessionctx/variable/sysvar.go#L1029-L1032">system variable definition</a> is called. For <code>tidb_skip_utf8_check</code> this is as follows:</p>
+<pre><code class="language-go">{Scope: ScopeGlobal | ScopeSession, Name: TiDBSkipUTF8Check, Value: BoolToOnOff(DefSkipUTF8Check), Type: TypeBool, SetSession: func(s *SessionVars, val string) error {
+	s.SkipUTF8Check = TiDBOptOn(val)
+	return nil
+}},
+</code></pre>
+<p>The <code>SetSession</code> function can also be considered an <code>Init</code> function, since it is called when the session is created and the values are copied from global scope. To disable <code>SetSession</code> from being called on creation, <code>skipInit</code> can be set to <code>true</code>. For example with <a href="https://github.com/pingcap/tidb/blob/246c59d5c926780235dd25aef27c469ffe376e21/sessionctx/variable/sysvar.go#L745-L752"><code>CharsetDatabase</code></a>:</p>
+<pre><code class="language-go">{Scope: ScopeGlobal | ScopeSession, Name: CharsetDatabase, Value: mysql.DefaultCharset, skipInit: true, Validation: func(vars *SessionVars, normalizedValue string, originalValue string, scope ScopeFlag) (string, error) {
+    return checkCharacterSet(normalizedValue, CharsetDatabase)
+}, SetSession: func(s *SessionVars, val string) error {
+	if cs, err := charset.GetCharsetInfo(val); err == nil {
+		s.systems[CollationDatabase] = cs.DefaultCollation
+	}
+	return nil
+}},
+</code></pre>
+<p>In the above example, skipping the <code>SetSession</code> function is useful because it prevents the <code>CollationDatabase</code> from being overwritten when the session is initialized. This is only expected if the user issues a statement to change the <code>CharsetDatabase</code> value.</p>
+<h3 id="differences-from-mysql"><a class="header" href="#differences-from-mysql">Differences from MySQL</a></h3>
+<p>In TiDB, changes to <code>GLOBAL</code> scoped system variables are propagated to other TiDB servers in the cluster and persist across restarts. The notification event to other servers is sent via an etcd channel in the call <code>domain.GetDomain(s).NotifyUpdateSysVarCache()</code>:</p>
+<pre><code class="language-go">// replaceGlobalVariablesTableValue executes restricted sql updates the variable value
+// It will then notify the etcd channel that the value has changed.
+func (s *session) replaceGlobalVariablesTableValue(ctx context.Context, varName, val string) error {
+	stmt, err := s.ParseWithParams(ctx, `REPLACE INTO %n.%n (variable_name, variable_value) VALUES (%?, %?)`, mysql.SystemDB, mysql.GlobalVariablesTable, varName, val)
+	if err != nil {
+		return err
+	}
+	_, _, err = s.ExecRestrictedStmt(ctx, stmt)
+	domain.GetDomain(s).NotifyUpdateSysVarCache() // &lt;-- the notification happens here
+	return err
+}
+</code></pre>
+<p>Because <code>GLOBAL</code> scoped variables are propagated to other servers, TiDB also has a special concept of "instance-scoped variables". An instance scoped variable is actually a <code>SESSION</code> scoped variable that has a <code>GetSession</code> method which returns data that is specific to an instance. For example, <a href="https://github.com/pingcap/tidb/blob/246c59d5c926780235dd25aef27c469ffe376e21/sessionctx/variable/sysvar.go#L1315-L1321"><code>tidb_general_log</code></a>:</p>
+<pre><code class="language-go">{Scope: ScopeSession, Name: TiDBGeneralLog, Value: BoolToOnOff(DefTiDBGeneralLog), Type: TypeBool, skipInit: true, SetSession: func(s *SessionVars, val string) error {
+	ProcessGeneralLog.Store(TiDBOptOn(val))
+	return nil
+}, GetSession: func(s *SessionVars) (string, error) {
+	return BoolToOnOff(ProcessGeneralLog.Load()), nil
+}},
+</code></pre>
+<p>The decision to make an option such as <code>tidb_general_log</code> instance scoped is because it references a file on the local filesystem. This may create issues when global, as the path may not be writable on each tidb-server in the cluster.</p>
+<p>As you can see by the <code>Scope: Session</code>, instance-scoped variables are not natively handled by the sysvar framework, but are instead denoted by the <code>GetSession()</code> function reading from a global location. The documentation for <a href="https://docs.pingcap.com/tidb/dev/system-variables#tidb_general_log"><code>tidb_general_log</code></a> also notes it as "instance" scoped by convention.</p>
+<h2 id="transaction-state"><a class="header" href="#transaction-state">Transaction state</a></h2>
+<p>The <code>session</code> struct (<code>s.txn</code>) is responsible for keeping modified key-value pairs in a <a href="https://github.com/pingcap/tidb/blob/bfbea9c3ef4232d76296a9c8390eb8b7da5bf45d/session/txn.go#L46-L71"><code>LazyTxn</code></a> until the transaction commits. A <code>commit</code> statement only sets the session variable state that it is <a href="https://github.com/pingcap/tidb/blob/246c59d5c926780235dd25aef27c469ffe376e21/executor/simple.go#L701-L703">no longer in an active transaction</a>:</p>
+<pre><code class="language-go">func (e *SimpleExec) executeCommit(s *ast.CommitStmt) {
+	e.ctx.GetSessionVars().SetInTxn(false)
+}
+</code></pre>
+<p>The function <a href="https://github.com/pingcap/tidb/blob/246c59d5c926780235dd25aef27c469ffe376e21/session/tidb.go#L242-L267"><code>autoCommitAfterStmt()</code></a> which is called as part of <a href="https://github.com/pingcap/tidb/blob/246c59d5c926780235dd25aef27c469ffe376e21/session/tidb.go#L207-L224"><code>finishStmt()</code></a> is responsible for committing the transaction:</p>
+<pre><code class="language-go">if !sessVars.InTxn() {
+	if err := se.CommitTxn(ctx); err != nil {
+		if _, ok := sql.(*executor.ExecStmt).StmtNode.(*ast.CommitStmt); ok {
+			err = errors.Annotatef(err, "previous statement: %s", se.GetSessionVars().PrevStmt)
+		}
+		return err
+	}
+	return nil
+}
+</code></pre>
+<p>The <code>session.CommitTxn()</code> function will handle the <code>commit</code>, including retry (if permitted). There is also special handling for both pessimistic and optimistic transactions, as well as removing the key-value pairs which apply to temporary tables from the transaction buffer.</p>
+<h2 id="see-also"><a class="header" href="#see-also">See also</a></h2>
+<ul>
+<li><a href="the-lifecycle-of-a-statement.html">The lifecycle of a statement</a></li>
+<li><a href="privilege.html">Privilege management</a></li>
+<li><a href="transaction.html">Transaction</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../understand-tidb/mvcc-garbage-collection.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../understand-tidb/privilege.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../understand-tidb/mvcc-garbage-collection.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../understand-tidb/privilege.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>
