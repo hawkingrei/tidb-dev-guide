@@ -14,7 +14,6 @@ jobs:
       - name: Setup mdBook
         shell: bash
         run: |
-            rm -rf ~/.cargo/registry
             cargo version
             cargo install mdbook-llms-txt-tools mdbook@0.4.52
 
